@@ -21,7 +21,8 @@ html {
 var n = 0
 var id = setInterval(() => {
    n+=1
-   code.innerHTML = content.substring(0, n) 
+   code.innerHTML = content.substring(0, n)
+   code.innerHTML = Prism.highlight(code.innerHTML, Prism.languages.css, 'css')
    styleTag.innerHTML = content.substring(0, n) 
    if(n >= content.length){
        clearInterval(id)
