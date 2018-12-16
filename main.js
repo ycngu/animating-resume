@@ -48,8 +48,14 @@ var id = setInterval(() => {
    code.innerHTML = content.substring(0, n)
    code.innerHTML = Prism.highlight(code.innerHTML, Prism.languages.css, 'css')
    styleTag.innerHTML = content.substring(0, n) 
+   scroll(0, 1000)
    if(n >= content.length){
        clearInterval(id)
+       fn2()
    }
 }, 10)
 
+
+function fn2(){
+    
+}
