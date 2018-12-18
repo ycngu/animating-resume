@@ -72,6 +72,7 @@ md = `
 # 技能介绍
 
 熟练掌握以下技能
+gst
 - javascript
 - jQuery
 - CSS
