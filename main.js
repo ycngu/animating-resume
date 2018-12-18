@@ -9,7 +9,7 @@ css1 = `/*
    transition: all 1s;
 }
 html {
-   background: rgb(222, 222, 222);
+   background: #DEDEDE;
    font-size: 16px;
    padding: 16px;
 }
@@ -20,21 +20,11 @@ html {
 }
 
 /* 接下来我需要一点代码高亮 */
-
-.token.comment {
-   color: slategray;
-}
 .token.selector {
    color: #690;
 }
 .token.property {
    color: #905;
-}
-.token.function {
-   color: #DD4A68;
-}
-.token.punctuation {
-   color: #999;
 }
 
 /* 好了，准备工作完成 */
@@ -54,13 +44,20 @@ html {
    border: 5px solid #444;
 }
 
-/* 现在请看右边 *
+/* 现在请看右边 */
 `
 
-css2 =`
-/* 现在看起来有点丑 */
-/* 哦，我写的markdown格式 */
-/* 现在我用markdown.js转换一下 */
+css2 = `
+/* 现在看起来有点丑 
+ * 哦，我写的是markdown格式 
+ * 现在我用markdown.js转换一下 
+ */
+`
+css3 = `
+/*
+ * 希望您喜欢这个会动的简历
+ * 谢谢观看
+ */
 `
 
 md = `
@@ -71,13 +68,14 @@ md = `
 - 2xxx ~ 2xxx xxx大学
 - 2xxx ~ 2xxx xxx公司任职
 - 2xxx ~ 2xxx xxx公司任职
+
 # 技能介绍
 
 熟练掌握以下技能
 - javascript
 - jQuery
 - CSS
-- ...
+- xxx
 
 # 项目介绍
 1. canvas画板
@@ -91,8 +89,14 @@ md = `
 `
 
 var n = 0
-writeCss('#code', css1, () => {
-    writePaper('#paper', md, convertMarkdownToHtml)
+writeCss('', css1, () => {
+    writePaper('#paper', md, () => {
+        writeCss(css1, css2, () => {
+            convertMarkdownToHtml(() => {
+                writeCss(css1 + css2, css3)
+            })
+        })
+    })
 })
 
 
@@ -109,30 +113,31 @@ function writePaper(view, content, callback) {
             console.log('writePaper')
             callback && callback.call()
         }
-    }, 10)
+    }, 40)
 }
 
-function writeCss(view, content, callback) {
+function writeCss(prefix, content, callback) {
     let n = 0
+    console.log(prefix)
     let id = setInterval(() => {
         n += 1
-        dom = document.querySelector(view)
+        dom = document.querySelector('#code')
         dom.innerHTML = content.substring(0, n)
-        dom.innerHTML = Prism.highlight(dom.innerHTML, Prism.languages.css, 'css')
-        styleTag.innerHTML = content.substring(0, n)
+        dom.innerHTML = Prism.highlight(prefix + dom.innerHTML, Prism.languages.css, 'css')
+        styleTag.innerHTML = prefix + content.substring(0, n)
         dom.scroll(0, 1000)
         if (n >= content.length) {
             clearInterval(id)
             console.log('writeCode')
             callback && callback.call()
         }
-    }, 10)
+    }, 65)
 }
 
 function convertMarkdownToHtml(fn) {
     let div = document.createElement('div')
     div.className = 'html markdown-body'
-    div.id ='paper'
+    div.id = 'paper'
     let tempMd = markdown.toHTML(md)
     div.innerHTML = tempMd
     let paper = document.querySelector('#paper')

@@ -21,18 +21,6 @@ html {
     color: black;
 }
 
-.token.function {
-    color: black;
-}
-
-.token.punctuation {
-    color: black;
-}
-
-.token.comment {
-    color: black;
-}
-
 #code::-webkit-scrollbar-thumb,
 #paper::-webkit-scrollbar-thumb {
     border-radius: 10px;
